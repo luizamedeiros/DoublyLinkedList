@@ -11,6 +11,8 @@ class ListaEncadeada:
             self.__cursor = self.__head
             novo_item = Item(item)
             novo_item.prox = self.__cursor
+            item_anterior = self.__cursor.ante
+            item_anterior = novo_item
             self.__head = novo_item
             self.__cursor = novo_item
         else:
@@ -55,10 +57,10 @@ class ListaEncadeada:
         self.__head = self.__head.prox
 
     def excluir_ultimo(self):
-        self.__ir_para_ultimo()
+        self.ir_para_ultimo()
         penultimo = self.__cursor.ante
-        self.__cursor = None
-        
+        penultimo.prox = None
+
     def inserir_na_posicao(self, k, item):
         k -= 1
         novo_item = Item(item)
@@ -111,9 +113,9 @@ class ListaEncadeada:
 
     def ir_para_ultimo(self):
         self.__ir_para_primeira()
-        print(self.__cursor.item)
         while self.__cursor.prox:
             self.__cursor = self.__cursor.prox
+
 
     def __retroceder_k_posicoes(self, k):
         contador = 0
