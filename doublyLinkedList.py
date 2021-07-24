@@ -5,16 +5,15 @@ class ListaEncadeada:
     def __init__(self):
         self.__head = None
         self.__cursor = None
-
+    
     def inserir_na_frente(self, item):
         if self.__head is not None:
             self.__cursor = self.__head
             novo_item = Item(item)
             novo_item.prox = self.__cursor
-            item_anterior = self.__cursor.ante
-            item_anterior = novo_item
+            self.__cursor.ante = novo_item
             self.__head = novo_item
-            self.__cursor = novo_item
+            self._cursor = self.__head
         else:
             novo_item = Item(item)
             novo_item.prox = None
@@ -36,10 +35,10 @@ class ListaEncadeada:
             self.__head = novo_item
 
     def printa_lista(self):
-        self.__cursor = self.__head
-        while self.__cursor:
-            print(self.__cursor.item)
-            self.__cursor = self.__cursor.prox
+        printer = self.__head
+        while printer.prox:
+            print(printer.item)
+            printer = printer.prox
 
     def buscar(self, item):
         encontrado = False
@@ -56,10 +55,10 @@ class ListaEncadeada:
     def excluir_primeiro(self):
         self.__head = self.__head.prox
 
+
     def excluir_ultimo(self):
-        self.ir_para_ultimo()
-        penultimo = self.__cursor.ante
-        penultimo.prox = None
+        self.__ir_para_ultimo()
+        self.__cursor.prox = None
 
     def inserir_na_posicao(self, k, item):
         k -= 1
@@ -107,15 +106,13 @@ class ListaEncadeada:
             item_anterior.prox = item_a_excluir.prox
             item_a_ligar.antes = item_anterior
 
-
     def __ir_para_primeira(self):
         self.__cursor = self.__head
 
-    def ir_para_ultimo(self):
+    def __ir_para_ultimo(self):
         self.__ir_para_primeira()
-        while self.__cursor.prox:
+        while self.__cursor.prox.prox:
             self.__cursor = self.__cursor.prox
-
 
     def __retroceder_k_posicoes(self, k):
         contador = 0
@@ -133,7 +130,6 @@ class ListaEncadeada:
                 print("Lista extrapolada!")
                 return "Lista extrapolada!"
 
-
     def vazia(self):
         if self.__head is None:
             print(True)
@@ -149,7 +145,6 @@ class ListaEncadeada:
             self.__cursor = self.__cursor.prox
             contador += 1
         if str(self.__cursor.item) == str(item):
-            print(f'Posição de {item} é {contador}')
             return int(contador)
         elif self.__cursor.prox is None:
             print("O item solicitado é inexistente \n")
